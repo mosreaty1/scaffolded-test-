@@ -1,0 +1,614 @@
+[
+  {
+    "id": "TC001",
+    "title": "User Registration with Valid Data",
+    "description": "Verify that a new user can successfully register with valid input data and is assigned the correct role.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the registration page."
+      },
+      {
+        "type": "action",
+        "description": "Fill in all mandatory fields with valid data (email, password, role selection)."
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm registration success message is displayed and user is assigned the selected role."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user entry is created in the backend with correct role assignment."
+      }
+    ]
+  },
+  {
+    "id": "TC002",
+    "title": "User Registration with Invalid Email Format",
+    "description": "Verify system rejects registration when the email format is invalid.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the registration page."
+      },
+      {
+        "type": "action",
+        "description": "Fill in registration form using an invalid email format."
+      },
+      {
+        "type": "action",
+        "description": "Submit the registration form."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that appropriate error message about invalid email format is displayed."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify no user account is created in the system."
+      }
+    ]
+  },
+  {
+    "id": "TC003",
+    "title": "User Login with Correct Credentials",
+    "description": "Verify user can sign in successfully with correct credentials.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the login page."
+      },
+      {
+        "type": "action",
+        "description": "Input valid username/email and password."
+      },
+      {
+        "type": "action",
+        "description": "Click the login button."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user is authenticated and redirected to the appropriate dashboard based on role."
+      }
+    ]
+  },
+  {
+    "id": "TC004",
+    "title": "User Login with Incorrect Credentials",
+    "description": "Verify system rejects login attempts with incorrect password or non-existent email.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the login page."
+      },
+      {
+        "type": "action",
+        "description": "Input incorrect username/email or password."
+      },
+      {
+        "type": "action",
+        "description": "Click the login button."
+      },
+      {
+        "type": "assertion",
+        "description": "Check appropriate error message for invalid login is displayed."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify user remains unauthenticated."
+      }
+    ]
+  },
+  {
+    "id": "TC005",
+    "title": "Role-Based Access Control Verification",
+    "description": "Verify access restrictions and navigation vary correctly for customer, vendor, and admin roles.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as customer."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure customer can access marketplace, shopping cart, order history, and review submission features."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure customer cannot access vendor or admin dashboards."
+      },
+      {
+        "type": "action",
+        "description": "Login as vendor."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify vendor can access vendor dashboard for product management, orders, and statistics."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify vendor cannot access admin dashboard."
+      },
+      {
+        "type": "action",
+        "description": "Login as admin."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify admin can access admin dashboard with platform management and analytics."
+      }
+    ]
+  },
+  {
+    "id": "TC006",
+    "title": "Vendor Product Creation with Valid Data",
+    "description": "Verify that vendor can successfully create a new product with valid information.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as a vendor."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to 'New Product' page."
+      },
+      {
+        "type": "action",
+        "description": "Fill in product details including name, description, price, stock quantity, and category."
+      },
+      {
+        "type": "action",
+        "description": "Submit the product creation form."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product is listed under vendor’s products with correct details."
+      }
+    ]
+  },
+  {
+    "id": "TC007",
+    "title": "Vendor Product Update and Delete Operations",
+    "description": "Verify vendor can update existing product details and delete a product successfully.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as a vendor."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to existing product edit page."
+      },
+      {
+        "type": "action",
+        "description": "Modify product details and save changes."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm product details are updated correctly."
+      },
+      {
+        "type": "action",
+        "description": "Delete the product."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify product is removed from vendor’s listing and marketplace."
+      }
+    ]
+  },
+  {
+    "id": "TC008",
+    "title": "Marketplace Product Search and Category Filtering",
+    "description": "Verify customers can browse all products, use category filters, and get search suggestions in real-time.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Navigate to the marketplace page."
+      },
+      {
+        "type": "action",
+        "description": "Type a partial product name in the search bar."
+      },
+      {
+        "type": "assertion",
+        "description": "Check that relevant product suggestions appear within 500ms."
+      },
+      {
+        "type": "action",
+        "description": "Apply category filter."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify displayed products belong only to selected category."
+      },
+      {
+        "type": "assertion",
+        "description": "Ensure combined search and filtering still delivers relevant results quickly."
+      }
+    ]
+  },
+  {
+    "id": "TC009",
+    "title": "Product Detail Page Display and Add to Cart",
+    "description": "Verify product detail page shows all necessary info and allows adding item to cart.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Open a product detail page."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm product name, description, price, stock availability, and reviews are visible."
+      },
+      {
+        "type": "action",
+        "description": "Select quantity and click 'Add to Cart'."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify the item is added to the shopping cart with correct quantity."
+      }
+    ]
+  },
+  {
+    "id": "TC010",
+    "title": "Shopping Cart Management with Multi-Vendor Items",
+    "description": "Verify customer can add items from multiple vendors, update quantities, and remove items with real-time UI updates.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Add products from different vendors to the cart."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify cart groups items correctly by vendor."
+      },
+      {
+        "type": "action",
+        "description": "Change item quantities in the cart."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify cart total updates in real-time with correct quantities."
+      },
+      {
+        "type": "action",
+        "description": "Remove one or more items from the cart."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify items are removed and UI refreshes accordingly."
+      }
+    ]
+  },
+  {
+    "id": "TC011",
+    "title": "Checkout Flow with Order Splitting and Stock Verification",
+    "description": "Verify that checkout collects shipping details, splits orders into sub-orders by vendor, updates stock, and creates the order successfully.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Proceed to checkout with multi-vendor items in cart."
+      },
+      {
+        "type": "action",
+        "description": "Fill shipping address form with valid data."
+      },
+      {
+        "type": "action",
+        "description": "Confirm and place the order."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify payment is initiated securely."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm order is split into sub-orders per vendor."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify stock levels for ordered products are reduced accordingly."
+      },
+      {
+        "type": "assertion",
+        "description": "Check order summarization is visible in customer order history."
+      }
+    ]
+  },
+  {
+    "id": "TC012",
+    "title": "Order History and Sub-Order Status Display",
+    "description": "Verify customer can view order history with accurate details and status for each sub-order by vendor.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as a customer."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to order history page."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify all past orders are listed with accurate date, total amount, and status."
+      },
+      {
+        "type": "assertion",
+        "description": "Expand an order to see sub-orders grouped by vendor with individual statuses."
+      }
+    ]
+  },
+  {
+    "id": "TC013",
+    "title": "Payment Processing with Commission Deduction and Payout Tracking",
+    "description": "Verify payments are processed securely, platform commission is deducted automatically, and payouts to vendors are correctly tracked.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Complete an order checkout with valid payment details."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify payment is authorized and processed via secure channel (PCI-DSS standards)."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm platform commission is calculated and deducted from vendor payouts."
+      },
+      {
+        "type": "assertion",
+        "description": "Check vendor payout records reflect accurate amounts after commission deduction."
+      }
+    ]
+  },
+  {
+    "id": "TC014",
+    "title": "Review Submission and Display",
+    "description": "Verify customers can submit product and vendor reviews which are immutable by vendors except for replies, with aggregated ratings displayed.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as customer and navigate to a purchased product page."
+      },
+      {
+        "type": "action",
+        "description": "Submit a product review with rating and comments."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify review is visible on product page and aggregated rating updates."
+      },
+      {
+        "type": "action",
+        "description": "Navigate to vendor page and submit a vendor review."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify vendor review appears with aggregated ratings."
+      },
+      {
+        "type": "action",
+        "description": "Login as vendor and attempt to edit or delete submitted customer reviews."
+      },
+      {
+        "type": "assertion",
+        "description": "Confirm vendors cannot modify customer reviews but can post replies."
+      },
+      {
+        "type": "action",
+        "description": "Vendor posts a reply to a customer review."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify vendor reply is displayed correctly under the review."
+      }
+    ]
+  },
+  {
+    "id": "TC015",
+    "title": "Notification Delivery and Preference Management",
+    "description": "Verify that order, payment, and platform event notifications are delivered via email and push based on user preferences.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as user and navigate to notification settings."
+      },
+      {
+        "type": "action",
+        "description": "Set preferences for receiving notifications via email only."
+      },
+      {
+        "type": "action",
+        "description": "Perform an action triggering an order status change."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify email notification is received and no push notification is sent."
+      },
+      {
+        "type": "action",
+        "description": "Change preferences to enable push notifications."
+      },
+      {
+        "type": "action",
+        "description": "Trigger a payment update notification."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify notifications are received timely via push and email."
+      }
+    ]
+  },
+  {
+    "id": "TC016",
+    "title": "Admin Dashboard User and Vendor Management",
+    "description": "Verify admin can approve, suspend, and manage users and vendors, configure commission rates, and view analytics.",
+    "category": "functional",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as admin and navigate to admin dashboard."
+      },
+      {
+        "type": "action",
+        "description": "Review pending vendor applications and approve them."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify approved vendors gain access to vendor dashboard."
+      },
+      {
+        "type": "action",
+        "description": "Suspend a vendor and verify they lose access appropriately."
+      },
+      {
+        "type": "action",
+        "description": "Update platform commission rate configuration."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify commission rate updates affect new transactions correctly."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify analytics dashboard displays accurate user, vendor, and sales data."
+      }
+    ]
+  },
+  {
+    "id": "TC017",
+    "title": "Performance Testing for Marketplace Search Response",
+    "description": "Verify product search returns results within 500 milliseconds under normal load.",
+    "category": "performance",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Perform multiple product searches with various queries using real users."
+      },
+      {
+        "type": "assertion",
+        "description": "Measure response time for each search."
+      },
+      {
+        "type": "assertion",
+        "description": "Assert that 95% of searches return results within 500ms."
+      }
+    ]
+  },
+  {
+    "id": "TC018",
+    "title": "Security Test - Access Unauthorized Pages",
+    "description": "Verify that users cannot access pages or features outside their roles by using direct URLs or API calls.",
+    "category": "security",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as customer and attempt to visit vendor or admin dashboard URLs."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access is denied and user is redirected or shown error."
+      },
+      {
+        "type": "action",
+        "description": "Login as vendor and attempt to access admin dashboard URLs."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify access is denied appropriately."
+      },
+      {
+        "type": "action",
+        "description": "Attempt unauthorized API calls modifying data outside user role permission."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify API calls are rejected with authorized error."
+      }
+    ]
+  },
+  {
+    "id": "TC019",
+    "title": "Shopping Cart Persistence Across Sessions",
+    "description": "Verify that items added to the cart persist correctly across user logouts and browser sessions.",
+    "category": "functional",
+    "priority": "Medium",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Login as customer and add multiple items to cart."
+      },
+      {
+        "type": "action",
+        "description": "Logout from the platform."
+      },
+      {
+        "type": "action",
+        "description": "Login again as the same customer."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify previously added cart items and quantities are intact."
+      }
+    ]
+  },
+  {
+    "id": "TC020",
+    "title": "Order Checkout with Insufficient Stock",
+    "description": "Verify system prevents order completion if requested quantity exceeds available stock and displays an error message.",
+    "category": "error handling",
+    "priority": "High",
+    "steps": [
+      {
+        "type": "action",
+        "description": "Add a product to cart with quantity greater than current stock."
+      },
+      {
+        "type": "action",
+        "description": "Attempt to proceed to checkout and place order."
+      },
+      {
+        "type": "assertion",
+        "description": "Verify checkout is blocked and an informative error about insufficient stock is displayed."
+      }
+    ]
+  }
+]

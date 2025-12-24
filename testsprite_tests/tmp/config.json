@@ -1,0 +1,18 @@
+{
+  "status": "commited",
+  "type": "frontend",
+  "scope": "codebase",
+  "localEndpoint": "http://localhost:3000",
+  "loginUser": "test@example.com",
+  "loginPassword": "123456abc",
+  "executionArgs": {
+    "projectName": "Shop-Hub",
+    "projectPath": "C:\\Users\\Mohamed Hasona\\Desktop\\New folder (16)",
+    "testIds": [],
+    "additionalInstruction": "",
+    "envs": {
+      "API_KEY": "sk-user-HHGRtP5WmGJQlcMQ1_cBKRy-ET55dmSiYPAuv7BLCMpquGn29WCXaSCX4LaseDEr6kg7FvT-6fHnwekxqD8eOfV7efxZbWfTAlNBrAmBsipUCkEpkP6ACqjZsNpEabhCWvc"
+    }
+  },
+  "proxy": "http://21ab0918-ded7-4ae0-8c65-aac012012cf9:J7U4Fmldgln5E5uYgJ9z1ffWMVBW6ZFK@tun.testsprite.com:8080"
+}

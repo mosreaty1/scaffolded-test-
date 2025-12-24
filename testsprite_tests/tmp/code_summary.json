@@ -1,0 +1,96 @@
+{
+  "tech_stack": [
+    "TypeScript",
+    "Next.js",
+    "React",
+    "Supabase",
+    "Tailwind CSS"
+  ],
+  "features": [
+    {
+      "name": "Authentication",
+      "description": "User authentication system with sign in, sign up, and sign out functionality. Includes role-based access control (customer, vendor, admin).",
+      "files": [
+        "app/auth/signin/page.tsx",
+        "app/auth/signup/page.tsx",
+        "lib/auth-context.tsx",
+        "lib/supabase.ts"
+      ]
+    },
+    {
+      "name": "Marketplace",
+      "description": "Product browsing and discovery page with search, category filtering, and product listing functionality.",
+      "files": [
+        "app/marketplace/page.tsx",
+        "components/product-card.tsx"
+      ]
+    },
+    {
+      "name": "Product Details",
+      "description": "Individual product detail page showing product information, reviews, and add to cart functionality.",
+      "files": [
+        "app/products/[id]/page.tsx"
+      ]
+    },
+    {
+      "name": "Shopping Cart",
+      "description": "Shopping cart management with add, update quantity, remove items, and vendor grouping functionality.",
+      "files": [
+        "app/cart/page.tsx"
+      ]
+    },
+    {
+      "name": "Checkout",
+      "description": "Order checkout process with shipping address form, order creation, sub-order generation by vendor, and stock management.",
+      "files": [
+        "app/checkout/page.tsx"
+      ]
+    },
+    {
+      "name": "Orders",
+      "description": "Order history and management page showing customer orders with detailed sub-orders grouped by vendor.",
+      "files": [
+        "app/orders/page.tsx"
+      ]
+    },
+    {
+      "name": "Vendor Dashboard",
+      "description": "Vendor management dashboard showing sales statistics, product management, and recent orders.",
+      "files": [
+        "app/vendor/dashboard/page.tsx",
+        "app/vendor/setup/page.tsx",
+        "app/vendor/products/new/page.tsx",
+        "app/vendor/products/[id]/edit/page.tsx"
+      ]
+    },
+    {
+      "name": "Admin Dashboard",
+      "description": "Admin panel for platform management including vendor management, statistics, and platform insights.",
+      "files": [
+        "app/admin/page.tsx"
+      ]
+    },
+    {
+      "name": "Notifications",
+      "description": "User notification system for order updates, payments, and other platform events.",
+      "files": [
+        "app/notifications/page.tsx"
+      ]
+    },
+    {
+      "name": "Navigation",
+      "description": "Main navigation component with role-based menu items and authentication state handling.",
+      "files": [
+        "components/navbar.tsx"
+      ]
+    },
+    {
+      "name": "Type Definitions",
+      "description": "TypeScript type definitions for all data models including User, Vendor, Product, Order, Cart, and Review.",
+      "files": [
+        "lib/types.ts"
+      ]
+    }
+  ]
+}
+
