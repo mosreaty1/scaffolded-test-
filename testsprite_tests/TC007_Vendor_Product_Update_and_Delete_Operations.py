@@ -1,66 +1,58 @@
 import asyncio
-from playwright import async_api
 from playwright.async_api import expect
 
+# Import stub functions for common operations
+from test_stubs import (
+    stub_full_page_setup,
+    stub_cleanup,
+    stub_async_sleep
+)
+
+# Import mock functions for test data
+from test_mocks import mock_product_data, mock_user_data
+
 async def run_test():
+    """
+    TC007: Vendor Product Update and Delete Operations
+    Tests vendor ability to update and delete products
+    """
     pw = None
     browser = None
     context = None
-    
+
     try:
-        # Start a Playwright session in asynchronous mode
-        pw = await async_api.async_playwright().start()
-        
-        # Launch a Chromium browser in headless mode with custom arguments
-        browser = await pw.chromium.launch(
+        # Use stub for complete page setup
+        pw, browser, context, page = await stub_full_page_setup(
+            url="http://localhost:3000",
             headless=True,
-            args=[
-                "--window-size=1280,720",         # Set the browser window size
-                "--disable-dev-shm-usage",        # Avoid using /dev/shm which can cause issues in containers
-                "--ipc=host",                     # Use host-level IPC for better stability
-                "--single-process"                # Run the browser in a single process mode
-            ],
+            default_timeout=5000
         )
-        
-        # Create a new browser context (like an incognito window)
-        context = await browser.new_context()
-        context.set_default_timeout(5000)
-        
-        # Open a new page in the browser context
-        page = await context.new_page()
-        
-        # Navigate to your target URL and wait until the network request is committed
-        await page.goto("http://localhost:3000", wait_until="commit", timeout=10000)
-        
-        # Wait for the main page to reach DOMContentLoaded state (optional for stability)
-        try:
-            await page.wait_for_load_state("domcontentloaded", timeout=3000)
-        except async_api.Error:
-            pass
-        
-        # Iterate through all iframes and wait for them to load as well
-        for frame in page.frames:
-            try:
-                await frame.wait_for_load_state("domcontentloaded", timeout=3000)
-            except async_api.Error:
-                pass
-        
+
+        # Mock vendor and product data
+        mock_vendor = mock_user_data(role="vendor")
+        mock_product = mock_product_data(vendor_id=mock_vendor["id"], stock=50)
+
         # Interact with the page elements to simulate user flow
-        # --> Assertions to verify final state
+        # TODO: Add your product update and delete interactions
+        # Example:
+        # await stub_click_element(page, f"button#edit-product-{mock_product['id']}")
+        # await stub_fill_input(page, "#product-price", str(mock_product["price"] + 10))
+        # await stub_click_element(page, "button#save-product")
+        # await stub_click_element(page, f"button#delete-product-{mock_product['id']}")
+
+        # Assertions to verify final state
         frame = context.pages[-1]
         try:
             await expect(frame.locator('text=Product update successful!').first).to_be_visible(timeout=30000)
         except AssertionError:
             raise AssertionError('Test case failed: The product details were not updated correctly or the product was not deleted as expected according to the test plan.')
-        await asyncio.sleep(5)
-    
+
+        # Use stub for async sleep
+        await stub_async_sleep(5)
+
     finally:
-        if context:
-            await context.close()
-        if browser:
-            await browser.close()
-        if pw:
-            await pw.stop()
-            
+        # Use stub for cleanup
+        await stub_cleanup(context, browser, pw)
+
 asyncio.run(run_test())
     

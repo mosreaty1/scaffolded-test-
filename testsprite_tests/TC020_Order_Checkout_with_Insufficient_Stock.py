@@ -1,49 +1,42 @@
 import asyncio
-from playwright import async_api
 from playwright.async_api import expect
 
+# Import stub functions for common operations
+from test_stubs import (
+    stub_full_page_setup,
+    stub_cleanup,
+    stub_async_sleep
+)
+
+# Import mock functions for test data
+from test_mocks import (
+    mock_user_data,
+    mock_product_data,
+    mock_order_data,
+    mock_cart_data,
+    mock_payment_data,
+    mock_review_data,
+    mock_notification_data
+)
+
 async def run_test():
+    """
+    TC020: Order Checkout with Insufficient Stock
+    """
     pw = None
     browser = None
     context = None
-    
+
     try:
-        # Start a Playwright session in asynchronous mode
-        pw = await async_api.async_playwright().start()
-        
-        # Launch a Chromium browser in headless mode with custom arguments
-        browser = await pw.chromium.launch(
+        # Use stub for complete page setup
+        pw, browser, context, page = await stub_full_page_setup(
+            url="http://localhost:3000",
             headless=True,
-            args=[
-                "--window-size=1280,720",         # Set the browser window size
-                "--disable-dev-shm-usage",        # Avoid using /dev/shm which can cause issues in containers
-                "--ipc=host",                     # Use host-level IPC for better stability
-                "--single-process"                # Run the browser in a single process mode
-            ],
+            default_timeout=5000
         )
-        
-        # Create a new browser context (like an incognito window)
-        context = await browser.new_context()
-        context.set_default_timeout(5000)
-        
-        # Open a new page in the browser context
-        page = await context.new_page()
-        
-        # Navigate to your target URL and wait until the network request is committed
-        await page.goto("http://localhost:3000", wait_until="commit", timeout=10000)
-        
-        # Wait for the main page to reach DOMContentLoaded state (optional for stability)
-        try:
-            await page.wait_for_load_state("domcontentloaded", timeout=3000)
-        except async_api.Error:
-            pass
-        
-        # Iterate through all iframes and wait for them to load as well
-        for frame in page.frames:
-            try:
-                await frame.wait_for_load_state("domcontentloaded", timeout=3000)
-            except async_api.Error:
-                pass
+
+        # Mock data for Order Checkout with Insufficient Stock
+        # TODO: Customize mock data as needed for this test
         
         # Interact with the page elements to simulate user flow
         # --> Assertions to verify final state
@@ -52,15 +45,11 @@ async def run_test():
             await expect(frame.locator('text=Order completed successfully').first).to_be_visible(timeout=30000)
         except AssertionError:
             raise AssertionError('Test failed: The system did not prevent order completion when requested quantity exceeded available stock, and no appropriate error message was displayed.')
-        await asyncio.sleep(5)
+        await stub_async_sleep(5)
     
     finally:
-        if context:
-            await context.close()
-        if browser:
-            await browser.close()
-        if pw:
-            await pw.stop()
+        # Use stub for cleanup
+        await stub_cleanup(context, browser, pw)
             
 asyncio.run(run_test())
     
