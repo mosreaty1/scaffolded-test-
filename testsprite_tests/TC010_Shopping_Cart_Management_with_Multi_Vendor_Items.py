@@ -1,65 +1,58 @@
 import asyncio
-from playwright import async_api
 from playwright.async_api import expect
 
+# Import stub functions for common operations
+from test_stubs import (
+    stub_full_page_setup,
+    stub_cleanup,
+    stub_async_sleep
+)
+
+# Import mock functions for test data
+from test_mocks import mock_cart_data, mock_product_data
+
 async def run_test():
+    """
+    TC010: Shopping Cart Management with Multi-Vendor Items
+    Tests cart management with items from multiple vendors
+    """
     pw = None
     browser = None
     context = None
-    
+
     try:
-        # Start a Playwright session in asynchronous mode
-        pw = await async_api.async_playwright().start()
-        
-        # Launch a Chromium browser in headless mode with custom arguments
-        browser = await pw.chromium.launch(
+        # Use stub for complete page setup
+        pw, browser, context, page = await stub_full_page_setup(
+            url="http://localhost:3000",
             headless=True,
-            args=[
-                "--window-size=1280,720",         # Set the browser window size
-                "--disable-dev-shm-usage",        # Avoid using /dev/shm which can cause issues in containers
-                "--ipc=host",                     # Use host-level IPC for better stability
-                "--single-process"                # Run the browser in a single process mode
-            ],
+            default_timeout=5000
         )
-        
-        # Create a new browser context (like an incognito window)
-        context = await browser.new_context()
-        context.set_default_timeout(5000)
-        
-        # Open a new page in the browser context
-        page = await context.new_page()
-        
-        # Navigate to your target URL and wait until the network request is committed
-        await page.goto("http://localhost:3000", wait_until="commit", timeout=10000)
-        
-        # Wait for the main page to reach DOMContentLoaded state (optional for stability)
-        try:
-            await page.wait_for_load_state("domcontentloaded", timeout=3000)
-        except async_api.Error:
-            pass
-        
-        # Iterate through all iframes and wait for them to load as well
-        for frame in page.frames:
-            try:
-                await frame.wait_for_load_state("domcontentloaded", timeout=3000)
-            except async_api.Error:
-                pass
-        
+
+        # Mock cart data with multi-vendor items
+        mock_cart = mock_cart_data(items_count=5)
+        vendor1_product = mock_product_data(vendor_id="vendor_001")
+        vendor2_product = mock_product_data(vendor_id="vendor_002")
+
         # Interact with the page elements to simulate user flow
-        # --> Assertions to verify final state
+        # TODO: Add your cart management interactions
+        # Example:
+        # await stub_click_element(page, "a[href='/cart']")
+        # await stub_fill_input(page, "input#quantity-1", "3")
+        # await stub_click_element(page, "button#update-cart")
+        # await stub_click_element(page, "button#remove-item-2")
+
+        # Assertions to verify final state
         try:
             await expect(page.locator('text=Order Confirmation Successful').first).to_be_visible(timeout=30000)
         except AssertionError:
             raise AssertionError("Test case failed: The test plan execution failed while verifying the customer's ability to add items from multiple vendors, update quantities, and remove items with real-time UI updates.")
-        await asyncio.sleep(5)
-    
+
+        # Use stub for async sleep
+        await stub_async_sleep(5)
+
     finally:
-        if context:
-            await context.close()
-        if browser:
-            await browser.close()
-        if pw:
-            await pw.stop()
-            
+        # Use stub for cleanup
+        await stub_cleanup(context, browser, pw)
+
 asyncio.run(run_test())
     
